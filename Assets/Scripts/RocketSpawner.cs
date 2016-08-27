@@ -15,7 +15,6 @@ public class RocketSpawner : MonoBehaviour
 
     void Update()
     {
-        return;
         _timer += Time.deltaTime;
         if (_timer > _nextSpawnTime)
         {
