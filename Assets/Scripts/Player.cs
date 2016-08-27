@@ -12,10 +12,12 @@ public class Player : MonoBehaviour
 
     private Vector3 _rotateAnchor;
     private FirstPersonController _fpsController;
+    public BoxCollider BoxColl;
 
 	void Start ()
     {
         _fpsController = GetComponent<FirstPersonController>();
+        BoxColl = GetComponent<BoxCollider>();
         _midScreen = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         _fireLayer = ~(1 << LayerMask.NameToLayer("Fire"));
     }

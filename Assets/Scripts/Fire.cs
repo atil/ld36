@@ -4,9 +4,13 @@ using System.Collections;
 public class Fire : MonoBehaviour
 {
     public GameObject BrickPrefab;
+    public Transform SliderSlot;
 
     private bool _hasClay;
     public bool HasClay { get { return _hasClay; } }
+
+    private float _clayPerc;
+    public float ClayPerc { get { return _clayPerc; } }
 
     public void TakeClay(Clay clay)
     {
@@ -21,7 +25,7 @@ public class Fire : MonoBehaviour
     {
         for (float f = 0; f < 3f; f += Time.deltaTime)
         {
-            // Loading bar
+            _clayPerc = f / 3f;
             yield return null;
         }
 
