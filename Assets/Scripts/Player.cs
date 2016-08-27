@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
                     hitObj.SetParent(HoldSlot);
                     hitObj.localPosition = Vector3.zero;
                     _heldItem = hitObj;
+                    _ui.SetCrosshairVisibility(false);
 
                     // PUT STILL DAMMIT
                     hitObj.GetComponent<Collider>().enabled = false;
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour
             _heldItem = null;
             HoldSlot.DetachChildren();
 
+            _ui.SetCrosshairVisibility(true);
             _fpsController.IsCursorLocked = true;
             _fpsController.IsMouseLookEnabled = true;
             _rotateAnchor = Input.mousePosition;

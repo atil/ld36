@@ -42,6 +42,7 @@ public class Ui : MonoBehaviour
     {
         RestartButton.gameObject.SetActive(true);
         GameOverText.SetActive(true);
+        SetCrosshairVisibility(false);
     }
 
     void Update()
@@ -104,7 +105,7 @@ public class Ui : MonoBehaviour
     {
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Image>().CrossFadeAlpha(isActive ? 0f : 1f, 0.1f, true);
+            piece.GetComponent<Image>().CrossFadeAlpha(isActive ? 1f : 0f, 0.1f, true);
         }
     }
 }

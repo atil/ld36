@@ -36,7 +36,7 @@ public class Rocket : MonoBehaviour
             {
                 if (c.GetComponent<Brick>())
                 {
-                    c.GetComponent<Rigidbody>().AddExplosionForce(50, transform.position, 10);
+                    c.GetComponent<Rigidbody>().AddExplosionForce(50, transform.position, 10, 10, ForceMode.VelocityChange);
 
                     Destroy(c.gameObject, Random.Range(1f, 3f));
                 }
