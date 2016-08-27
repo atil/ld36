@@ -21,6 +21,7 @@ public class Rocket : MonoBehaviour
         toRelic.y = 0;
         transform.up = toRelic;
         transform.Translate(toRelic * _speed * Time.deltaTime, Space.World);
+
     }
 
     void OnCollisionEnter(Collision col)

@@ -15,11 +15,12 @@ public class RocketSpawner : MonoBehaviour
 
     void Update()
     {
+        return;
         _timer += Time.deltaTime;
         if (_timer > _nextSpawnTime)
         {
             _timer = 0;
-            _nextSpawnTime = Random.Range(10f, 20f);
+            _nextSpawnTime = Random.Range(25f, 35f);
 
             var x = Random.Range(20f, 30f);
             if (Random.value < 0.5)

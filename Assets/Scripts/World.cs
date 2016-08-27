@@ -10,10 +10,15 @@ public class World : MonoBehaviour
     public RocketSpawner RocketSpawner;
     public Ui Ui;
 
+    void Start()
+    {
+        StartCoroutine(TimescaleCoroutine());
+    }
     
+ 
     public void OnExplosion()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.01f;
     }
 
     IEnumerator TimescaleCoroutine()
