@@ -8,6 +8,7 @@ public class Rocket : MonoBehaviour
     public GameObject ExplosionPrefab;
     public float SidewaysSpeed;
     public Transform Target;
+    public AudioClip ExplodeClip;
 
     private Transform _relicTransform;
     private float _speed = 1f;
@@ -35,7 +36,6 @@ public class Rocket : MonoBehaviour
                 FindObjectOfType<World>().GameOver(_player);
             }
 
-            Destroy(gameObject);
             ExplodeEffect(1);
 
             foreach (var c in Physics.OverlapSphere(transform.position, 3))
@@ -53,7 +53,6 @@ public class Rocket : MonoBehaviour
         {
             FindObjectOfType<World>().GameOver(col.collider.GetComponent<Relic>());
             ExplodeEffect(10);
-            Destroy(gameObject);
         }
     }
 
@@ -62,6 +61,7 @@ public class Rocket : MonoBehaviour
         var expGo = (GameObject)Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
         expGo.transform.localScale = Vector3.one * magnitude;
         FindObjectOfType<World>().OnExplosion();
-
+        AudioSource.PlayClipAtPoint(ExplodeClip, transform.position);
+        Destroy(gameObject);
     }
 }

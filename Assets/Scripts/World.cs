@@ -69,6 +69,7 @@ public class World : MonoBehaviour
         Player.BoxColl.enabled = true;
         Player.GetComponent<FirstPersonController>().IsCursorLocked = false;
         Player.GetComponent<FirstPersonController>().enabled = false;
+        Player.MusicAudioSource.Stop();
 
         foreach (var rb in FindObjectsOfType<Rigidbody>())
         {

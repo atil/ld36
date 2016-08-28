@@ -5,6 +5,9 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Player : MonoBehaviour
 {
     public Transform HoldSlot;
+    public AudioClip PickUpClip;
+    public AudioClip PutDownClip;
+    public AudioSource MusicAudioSource;
 
     private Transform _heldItem;
     private Vector3 _midScreen;
@@ -56,6 +59,8 @@ public class Player : MonoBehaviour
                 if (hitObj.GetComponent<Clay>() || hitObj.GetComponent<Brick>()
                     && _heldItem == null)
                 {
+                    AudioSource.PlayClipAtPoint(PickUpClip, transform.position);
+
                     hitObj.SetParent(HoldSlot);
                     hitObj.localPosition = Vector3.zero;
                     _heldItem = hitObj;
@@ -72,6 +77,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && _heldItem != null)
         {
+            AudioSource.PlayClipAtPoint(PutDownClip, transform.position);
+
             if (_heldItem.GetComponent<Brick>())
             {
                 _heldItem.GetComponent<Brick>().IsGhost = false;

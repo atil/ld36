@@ -5,6 +5,7 @@ public class Fire : MonoBehaviour
 {
     public GameObject BrickPrefab;
     public Transform SliderSlot;
+    public AudioSource AudioSource;
 
     private bool _hasClay;
     public bool HasClay { get { return _hasClay; } }
@@ -23,6 +24,7 @@ public class Fire : MonoBehaviour
 
     IEnumerator TransformClayToBrick()
     {
+        AudioSource.Play();
         for (float f = 0; f < 3f; f += Time.deltaTime)
         {
             _clayPerc = f / 3f;
@@ -34,6 +36,7 @@ public class Fire : MonoBehaviour
 
         brickGo.GetComponent<Rigidbody>().AddForce(Random.value, 10, Random.value, ForceMode.VelocityChange);
         _hasClay = false;
+        AudioSource.Stop();
 
     }
 
