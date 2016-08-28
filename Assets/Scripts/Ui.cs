@@ -11,7 +11,10 @@ public class Ui : MonoBehaviour
     public Fire[] Fires;
     public CrosshairView CrosshairView;
 
+    public Text ScoreText;
+    public Text BestText;
     public GameObject GameOverText;
+    public Text ReasonText;
     public Button RestartButton;
 
     private List<Slider> _fireSliders = new List<Slider>();
@@ -33,10 +36,22 @@ public class Ui : MonoBehaviour
 
     }
 
-    public void GameOver()
+    public void GameOver(string message, float time)
     {
         RestartButton.gameObject.SetActive(true);
         GameOverText.SetActive(true);
+        ReasonText.gameObject.SetActive(true);
+        ReasonText.text = message;
+
+        var scoreStr = (((int)time) / 60).ToString() + ":" + (((int)time) % 60).ToString();
+        var bestTime = PlayerPrefs.GetFloat("time");
+        var bestStr = (((int)bestTime) / 60).ToString() + ":" + (((int)bestTime) % 60).ToString();
+
+        ScoreText.gameObject.SetActive(true);
+        ScoreText.text += scoreStr;
+        BestText.gameObject.SetActive(true);
+        BestText.text += bestStr;
+
         CrosshairView.SetCrosshairVisibility(false);
     }
 

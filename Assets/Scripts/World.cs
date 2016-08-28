@@ -10,12 +10,18 @@ public class World : MonoBehaviour
     public RocketSpawner[] RocketSpawners;
     public Ui Ui;
 
+    private float _gameTimer;
+
     void Start()
     {
         StartCoroutine(TimescaleCoroutine());
     }
     
- 
+    void Update()
+    {
+        _gameTimer += Time.deltaTime;
+    }
+
     public void OnExplosion()
     {
         Time.timeScale = 0.01f;
@@ -30,9 +36,24 @@ public class World : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    public void GameOver(MonoBehaviour destroyedAgent)
     {
-        Ui.GameOver();
+        if (_gameTimer > PlayerPrefs.GetFloat("time", -1))
+        {
+            PlayerPrefs.SetFloat("time", _gameTimer);
+        }
+
+        var msg = string.Empty;
+        if (destroyedAgent is Relic)
+        {
+            msg = "Relic destroyed";
+        }
+        else if (destroyedAgent is Player)
+        {
+            msg = "You are dead";
+        }
+
+        Ui.GameOver(msg, _gameTimer);
 
         foreach (var cs in ClaySpawners)
         {
@@ -52,7 +73,7 @@ public class World : MonoBehaviour
         foreach (var rb in FindObjectsOfType<Rigidbody>())
         {
             rb.isKinematic = false;
-            rb.AddExplosionForce(50, Relic.transform.position, 100, 10, ForceMode.VelocityChange);
+            rb.AddExplosionForce(50, destroyedAgent.transform.position, 100, 10, ForceMode.VelocityChange);
         }
     }
 }

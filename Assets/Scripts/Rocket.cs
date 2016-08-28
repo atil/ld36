@@ -4,12 +4,19 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Rocket : MonoBehaviour
 {
+    public const float ExplosionRadius = 10f;
     public GameObject ExplosionPrefab;
     public float SidewaysSpeed;
     public Transform Target;
 
     private Transform _relicTransform;
     private float _speed = 1f;
+    private Player _player;
+
+    void Start()
+    {
+        _player = FindObjectOfType<Player>();
+    }
 
     void Update()
     {
@@ -23,6 +30,11 @@ public class Rocket : MonoBehaviour
     {
         if (col.collider.GetComponent<Brick>())
         {
+            if (Vector3.Distance(_player.transform.position, transform.position) < ExplosionRadius)
+            {
+                FindObjectOfType<World>().GameOver(_player);
+            }
+
             Destroy(gameObject);
             ExplodeEffect(1);
 
@@ -30,7 +42,7 @@ public class Rocket : MonoBehaviour
             {
                 if (c.GetComponent<Brick>())
                 {
-                    c.GetComponent<Rigidbody>().AddExplosionForce(50, transform.position, 10, 10, ForceMode.VelocityChange);
+                    c.GetComponent<Rigidbody>().AddExplosionForce(250, transform.position, ExplosionRadius, 20, ForceMode.VelocityChange);
 
                     Destroy(c.gameObject, Random.Range(1f, 3f));
                 }
@@ -39,7 +51,7 @@ public class Rocket : MonoBehaviour
 
         if (col.collider.GetComponent<Relic>())
         {
-            FindObjectOfType<World>().GameOver();
+            FindObjectOfType<World>().GameOver(col.collider.GetComponent<Relic>());
             ExplodeEffect(10);
             Destroy(gameObject);
         }
