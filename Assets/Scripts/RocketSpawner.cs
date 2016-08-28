@@ -4,6 +4,8 @@ using System.Collections;
 public class RocketSpawner : MonoBehaviour
 {
     public GameObject RocketPrefab;
+    public Transform Target;
+    public Collider[] SpawnVolumes;
 
     private float _timer;
     private float _nextSpawnTime;
@@ -15,26 +17,19 @@ public class RocketSpawner : MonoBehaviour
 
     void Update()
     {
-        return;
         _timer += Time.deltaTime;
         if (_timer > _nextSpawnTime)
         {
             _timer = 0;
             _nextSpawnTime = Random.Range(25f, 35f);
 
-            var x = Random.Range(20f, 30f);
-            if (Random.value < 0.5)
-            {
-                x = -x;
-            }
+            var bnds = SpawnVolumes[Random.Range(0, SpawnVolumes.Length - 1)].bounds;
+            var x = Random.Range(bnds.center.x - bnds.extents.x, bnds.center.x + bnds.extents.x);
+            var y = Random.Range(bnds.center.y - bnds.extents.y, bnds.center.y + bnds.extents.y);
+            var z = Random.Range(bnds.center.z - bnds.extents.z, bnds.center.z + bnds.extents.z);
 
-            var z = Random.Range(20f, 30f);
-            if (Random.value < 0.5)
-            {
-                z = -z;
-            }
-
-            var rocketGo = Instantiate(RocketPrefab, new Vector3(x, Random.Range(1f, 1.8f), z), Quaternion.identity);
+            var rocketGo = (GameObject) Instantiate(RocketPrefab, new Vector3(x, y, z), Quaternion.identity);
+            rocketGo.GetComponent<Rocket>().Target = Target;
         }
     }
 

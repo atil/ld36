@@ -9,6 +9,7 @@ public class Clay : MonoBehaviour
         var fire = col.collider.GetComponent<Fire>();
         if (fire != null && !fire.HasClay)
         {
+            ClaySpawner.ClayCount--;
             fire.TakeClay(this);
         }
     }

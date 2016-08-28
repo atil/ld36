@@ -6,29 +6,23 @@ public class Rocket : MonoBehaviour
 {
     public GameObject ExplosionPrefab;
     public float SidewaysSpeed;
+    public Transform Target;
 
     private Transform _relicTransform;
     private float _speed = 1f;
 
-	void Start()
-    {
-        _relicTransform = FindObjectOfType<Relic>().transform;
-    }
-
     void Update()
     {
-        var toRelic = (_relicTransform.position - transform.position).normalized;
+        var toRelic = (Target.position - transform.position).normalized;
         toRelic.y = 0;
         transform.up = toRelic;
         transform.Translate(toRelic * _speed * Time.deltaTime, Space.World);
-
     }
 
     void OnCollisionEnter(Collision col)
     {
         if (col.collider.GetComponent<Brick>())
         {
-
             Destroy(gameObject);
             ExplodeEffect(1);
 

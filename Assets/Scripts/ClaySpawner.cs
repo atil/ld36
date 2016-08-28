@@ -3,11 +3,14 @@ using System.Collections;
 
 public class ClaySpawner : MonoBehaviour
 {
+    public const int ClayLimit = 20;
+    public static int ClayCount;
+
     public GameObject ClayPrefab;
+    public Collider[] SpawnVolumes;
 
     private float _timer = 10;
     private float _nextSpawnTime;
-    private const int ClayLimit = 10;
 
     void Start()
     {
@@ -23,13 +26,25 @@ public class ClaySpawner : MonoBehaviour
             _timer = 0;
             _nextSpawnTime = Random.Range(3f, 5f);
 
-            if (FindObjectsOfType<Clay>().Length <= ClayLimit)
+            if (ClayCount <= ClayLimit)
             {
-                var pos = Random.insideUnitSphere * 20;
-                pos.y = 1f;
-                var clayGo = Instantiate(ClayPrefab, pos, Quaternion.identity);
+                Spawn();
             }
         }
+    }
+
+    void Spawn() 
+    {
+        ClayCount++;
+
+        var bnds = SpawnVolumes[Random.Range(0, SpawnVolumes.Length - 1)].bounds;
+        var x = Random.Range(bnds.center.x - bnds.extents.x, bnds.center.x + bnds.extents.x);
+        var y = Random.Range(bnds.center.y - bnds.extents.y, bnds.center.y + bnds.extents.y);
+        var z = Random.Range(bnds.center.z - bnds.extents.z, bnds.center.z + bnds.extents.z);
+
+        var pos = new Vector3(x, y, z);
+        Instantiate(ClayPrefab, pos, Quaternion.identity);
+
     }
 	
 }

@@ -6,8 +6,8 @@ public class World : MonoBehaviour
 {
     public Player Player;
     public Relic Relic;
-    public ClaySpawner ClaySpawner;
-    public RocketSpawner RocketSpawner;
+    public ClaySpawner[] ClaySpawners;
+    public RocketSpawner[] RocketSpawners;
     public Ui Ui;
 
     void Start()
@@ -34,8 +34,15 @@ public class World : MonoBehaviour
     {
         Ui.GameOver();
 
-        ClaySpawner.enabled = false;
-        RocketSpawner.enabled = false;
+        foreach (var cs in ClaySpawners)
+        {
+            cs.enabled = false;
+        }
+
+        foreach (var rs in RocketSpawners)
+        {
+            rs.enabled = false;
+        }
 
         Player.GetComponent<Rigidbody>().drag = 3;
         Player.BoxColl.enabled = true;
