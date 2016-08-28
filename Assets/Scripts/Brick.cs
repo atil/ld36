@@ -23,8 +23,6 @@ public class Brick : MonoBehaviour
 
     public Transform GetNeighborSlot(Vector3 hitNormal)
     {
-        var localNormal = transform.InverseTransformPoint(hitNormal);
-
         foreach (Transform slot in Slots)
         {
             if (Vector3.Dot((slot.position - transform.position).normalized, hitNormal) > 0.9)
