@@ -14,6 +14,7 @@ public class World : MonoBehaviour
 
     void Start()
     {
+		ClaySpawner.ClayCount = 0;
         StartCoroutine(TimescaleCoroutine());
     }
     
