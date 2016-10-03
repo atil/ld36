@@ -61,7 +61,7 @@ public class Rocket : MonoBehaviour
         var expGo = (GameObject)Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
         expGo.transform.localScale = Vector3.one * magnitude;
         FindObjectOfType<World>().OnExplosion();
-        AudioSource.PlayClipAtPoint(ExplodeClip, transform.position);
+        //AudioSource.PlayClipAtPoint(ExplodeClip, transform.position);
         Destroy(gameObject);
     }
 }
